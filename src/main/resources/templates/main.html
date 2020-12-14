@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script>
+        function testGetAll() {
+            $.ajax({
+                url:"/user/findAll",
+                type:"post",
+                success:function (data) {
+                    /*alert(data);*/
+                    let users = JSON.parse(data);
+                    $("#tb_users").html("<tr><td>ID</td><td>用户名</td><td>密码</td></tr>")
+                    for (var i=0;i<users.length;i++){
+                        $("#tb_users").append("<tr><td>"+users[i].id+"</td><td>"+users[i].name+"</td><td>"+users[i].password+"</td></tr>")
+                    }
+
+                }
+            });
+
+        }
+    </script>
+</head>
+<body>
+
+欢迎用户<span th:text="${session.loginUser.name}"></span>
+<br>
+<button onclick="testGetAll()">查询所有用户</button>
+<table id="tb_users"></table>
+
+</body>
+</html>
